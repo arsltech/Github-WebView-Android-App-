@@ -29,10 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private String webUrl = "https://github.com";
     ProgressBar progressBarWeb;
     ProgressDialog progressDialog;
-
     RelativeLayout relativeLayout;
     Button btnNoInternetConnection;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +49,8 @@ public class MainActivity extends AppCompatActivity {
         btnNoInternetConnection = (Button) findViewById(R.id.btnNoConnection);
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
 
+        webView.getSettings().setJavaScriptEnabled(true);
         checkConnection();
-
-
 
         webView.setWebViewClient(new WebViewClient(){
 
@@ -147,13 +144,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
