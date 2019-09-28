@@ -2,11 +2,13 @@ package com.developer.arsltech.github;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     RelativeLayout relativeLayout;
     Button btnNoInternetConnection;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +51,27 @@ public class MainActivity extends AppCompatActivity {
 
         btnNoInternetConnection = (Button) findViewById(R.id.btnNoConnection);
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+
+        swipeRefreshLayout.setColorSchemeColors(Color.BLUE,Color.YELLOW,Color.GREEN);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                webView.reload();
+            }
+        });
+
 
         webView.getSettings().setJavaScriptEnabled(true);
         checkConnection();
 
         webView.setWebViewClient(new WebViewClient(){
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                swipeRefreshLayout.setRefreshing(false);
+                super.onPageFinished(view, url);
+            }
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
