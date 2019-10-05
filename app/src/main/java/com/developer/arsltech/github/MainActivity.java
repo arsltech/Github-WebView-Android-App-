@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setDomStorageEnabled(true);
         checkConnection();
 
         webView.setWebViewClient(new WebViewClient(){
